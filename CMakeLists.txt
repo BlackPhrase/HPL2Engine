@@ -12,8 +12,8 @@ else()
     set(BIN_LIBROOT ${PLATFORM_PREFIX})
 endif()
 
-set(DEP_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../dependencies/lib/${BIN_LIBROOT}")
-set(DEP_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../dependencies/include")
+set(DEP_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/lib/${BIN_LIBROOT}")
+set(DEP_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/include")
 find_path(PREBUILT_PLATFORM_ROOT .
     PATHS "${DEP_LIB_DIR}"
     NO_DEFAULT_PATH
@@ -27,7 +27,7 @@ mark_as_advanced(
 include(UtilityFunctions)
 
 IF(APPLE)
-    SET(PRIVATE_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../dependencies CACHE PATH "")
+    SET(PRIVATE_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies CACHE PATH "")
     if(IS_APPLE_64)
         SET(PRIVATE_LIB_SUFFIX "lib/macosx64")
     else()
@@ -35,12 +35,12 @@ IF(APPLE)
     endif()
 ELSEIF(LINUX)
     SET(PRIVATE_LIB_SUFFIX "lib/linux")
-    SET(PRIVATE_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../dependencies CACHE PATH "")
+    SET(PRIVATE_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies CACHE PATH "")
 ENDIF()
 
 OPTION(USE_SDL2 "Use SDL2 instead of SDL1.2" ON)
 
-add_subdirectory(../dependencies/OALWrapper OALWrapper)
+add_subdirectory(./dependencies/OALWrapper OALWrapper)
 
 SET(HPL2_DEFINES
     PUBLIC $<$<BOOL:${USE_SDL2}>:USE_SDL2>
@@ -54,15 +54,15 @@ set(HPL2_INCLUDES
     PUBLIC include
     #Important that this is before dependencies so the correct OpenAL headers are used
     PRIVATE ${OALWRAPPER_INCLUDE_DIR}
-    PUBLIC ../dependencies/include
+    PUBLIC ./dependencies/include
 )
 
 IF(LINUX)
-    add_library(binreloc STATIC ../dependencies/sources/binreloc/binreloc.c)
+    add_library(binreloc STATIC ./dependencies/sources/binreloc/binreloc.c)
     set_target_properties(binreloc PROPERTIES COMPILE_DEFINITIONS "ENABLE_BINRELOC")
 
     list(APPEND HPL2_INCLUDES
-        ../dependencies/sources/binreloc/
+        ./dependencies/sources/binreloc/
     )
 ENDIF()
 
@@ -344,7 +344,5 @@ FUNCTION(AddTestTarget target_name)
     )
 ENDFUNCTION()
 
-add_subdirectory(../tests tests)
-add_subdirectory(../tools tools)
-
-
+#add_subdirectory(tests)
+add_subdirectory(tools)
