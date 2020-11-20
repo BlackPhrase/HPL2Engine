@@ -83,7 +83,7 @@ namespace hpl {
 		tString GetEntityType(){ return "Billboard";}
 
 		bool IsVisible();
-		
+
 		//Renderable implementations
 		cMaterial *GetMaterial(){ return mpMaterial;}
 		iVertexBuffer* GetVertexBuffer(){return mpVtxBuffer;}

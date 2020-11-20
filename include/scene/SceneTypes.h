@@ -92,6 +92,7 @@ namespace hpl
 	class iViewportCallback
 	{
 	public:
+		virtual ~iViewportCallback() {}
 		virtual void OnPreWorldDraw()=0;
 		virtual void OnPostWorldDraw()=0;
 
@@ -114,6 +115,7 @@ namespace hpl
 	class iEntityCallback
 	{
 	public:
+		virtual ~iEntityCallback() {}
 		virtual void OnTransformUpdate(iEntity3D * apEntity)=0;
 	};
 
@@ -127,6 +129,8 @@ namespace hpl
 	class iRendererCallback
 	{
 	public:
+		virtual ~iRendererCallback() {}
+
 		virtual void OnPostSolidDraw(cRendererCallbackFunctions *apFunctions)=0;
 		virtual void OnPostTranslucentDraw(cRendererCallbackFunctions *apFunctions)=0;
 		virtual void OnPostPostGBufferDraw(cRendererCallbackFunctions *apFunctions){}

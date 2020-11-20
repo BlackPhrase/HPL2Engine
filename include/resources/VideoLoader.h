@@ -33,7 +33,7 @@ namespace hpl {
 	{
 	friend class cVideoLoaderHandler;
 	public:
-		
+		virtual ~iVideoLoader() { }
 		virtual iVideoStream* LoadVideo(const tWString& asFile)=0;
 
 	protected:

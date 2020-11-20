@@ -134,6 +134,34 @@ namespace hpl {
 	{
 		mfFadeStep = -1.0f / std::abs(afTime);
 	}
+
+	//-----------------------------------------------------------------------
+
+	void cAnimationState::FadeInSpeed(float afTime)
+	{
+		if(afTime == 0.0f)
+		{
+			mfSpeed = 1;
+			mfFadeSpeed = 0;
+		}
+		else
+		{
+			mfFadeSpeed = 1.0f / cMath::Abs(afTime);
+		}
+	}
+	
+	void cAnimationState::FadeOutSpeed(float afTime)
+	{
+		if(afTime == 0.0f)
+		{
+			mfSpeed = 0;
+			mfFadeSpeed = 0;
+		}
+		else
+		{
+			mfFadeSpeed = -1.0f / cMath::Abs(afTime);
+		}
+	}
 	
 	//-----------------------------------------------------------------------
 	

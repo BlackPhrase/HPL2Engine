@@ -140,6 +140,7 @@ namespace hpl {
 		void FadeTo(const cColor& aCol, float afRadius, float afTime);
 		void StopFading();
 		bool IsFading();
+		float GetFadeProgress() { return 1.0f - mfFadeTime / mfFadeDuration; }
 		cColor GetDestColor(){ return mDestCol;}
 		float GetDestRadius(){ return mfDestRadius;}
 
@@ -178,6 +179,14 @@ namespace hpl {
 		//Properties
 		const cColor& GetDiffuseColor(){ return mDiffuseColor; }
 		void SetDiffuseColor(cColor aColor);
+
+		float GetBrightness() { return mfBrightness; }
+		float GetFalloff() { return mfFalloff; }
+
+		void SetBrightness(float afBrightness) { mfBrightness = afBrightness; }
+		void SetFalloff(float afFalloff) { mfFalloff = afFalloff; }
+
+		cColor GetColor();
 		
 		const cColor&  GetDefaultDiffuseColor(){ return mDefaultDiffuseColor;}
 		void SetDefaultDiffuseColor(const cColor& aColor) { mDefaultDiffuseColor = aColor; }
@@ -209,7 +218,6 @@ namespace hpl {
 		
 		virtual void SetRadius(float afX);
 		float GetRadius(){return mfRadius;}
-
 
 		float GetSourceRadius(){ return mfSourceRadius;}
 		void SetSourceRadius(float afX){ mfSourceRadius = afX;}
@@ -252,6 +260,9 @@ namespace hpl {
 		float mfSourceRadius;
 		float mfRadius;
 
+		float mfBrightness;
+		float mfFalloff;
+
 		bool mbCastShadows;
 		tObjectVariabilityFlag mlShadowCastersAffected;
 
@@ -267,6 +278,7 @@ namespace hpl {
 		cColor mDestCol;
 		float mfDestRadius;
 		float mfFadeTime;
+		float mfFadeDuration;
 
 		///////////////////////////
 		//Flicker

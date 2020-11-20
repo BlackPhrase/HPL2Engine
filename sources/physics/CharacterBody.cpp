@@ -211,10 +211,11 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	void cCharacterBodyRay::Clear()
+	void cCharacterBodyRay::Clear(bool abCollideVolatile)
 	{
 		mfMinDist = 10000.0f;
 		mbCollide = false;
+		mbCollideVolatile = abCollideVolatile;
 	}
 
 	//-----------------------------------------------------------------------
@@ -294,6 +295,7 @@ namespace hpl {
 		mbActive = true;
 		mbCollideCharacter = true;
 		mbTestCollision = true;
+		mbCollideStaticVolatile = true;
 
 		mbEntitySmoothYPos = false;
 		mlEntitySmoothYPosNum = 20;
@@ -1101,7 +1103,7 @@ namespace hpl {
 
 	bool iCharacterBody::CheckRayIntersection(const cVector3f &avStart, const cVector3f &avEnd, float *apDistance, cVector3f *apNormalVec)
 	{
-		mpRayCallback->Clear();
+		mpRayCallback->Clear(mbCollideStaticVolatile);
 		mpWorld->CastRay(mpRayCallback,avStart,avEnd,apDistance!=NULL,apNormalVec!=NULL,false);
 		bool bCollide = mpRayCallback->mbCollide;
 		if(bCollide)
@@ -1894,7 +1896,7 @@ namespace hpl {
 				//If no collision and on ground and not climbing then cast ray to get ground normal
 				if(mlOnGroundCount > 0 && mbClimbing==false)
 				{
-					mpRayCallback->Clear();
+					mpRayCallback->Clear(mbCollideStaticVolatile);
 					cVector3f vStart = GetFeetPosition() + cVector3f(0,0.001f,0);
 					cVector3f vEnd = vStart - cVector3f(0,mvSize.x*2.0001f,0);
 					mpWorld->CastRay(mpRayCallback,vStart,vEnd,true,true,false);
@@ -2272,7 +2274,7 @@ namespace hpl {
 		return mpWorld->CheckShapeWorldCollision(apPushBackVector, pShape, cMath::MatrixTranslate(avPos),
 												mpCurrentBody, false, true, 
 												apCallback, true,mlMinBodyPushStrength, 
-												mlCollideFlags, false);
+												mlCollideFlags, false, !mbCollideStaticVolatile);
 	}
 	
 	//-----------------------------------------------------------------------

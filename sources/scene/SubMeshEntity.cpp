@@ -75,6 +75,7 @@ namespace hpl {
 
 		mpMaterial = NULL;
 
+		mbIsOccluder = true;
 		mpUserData = NULL;
 
 		//This is used to see if null should be returned.
@@ -183,6 +184,15 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
+	
+	bool cSubMeshEntity::UpdateGraphicsForViewport(cFrustum *apFrustum,float afFrameTime)
+	{
+		/////////////////
+		// Get distance to frustum
+		if(IsStatic() == false && apFrustum) mfDistanceToFrustum = cMath::Vector3DistSqr(apFrustum->GetOrigin(), GetWorldPosition());
+
+		return true;
+	}
 
 	void cSubMeshEntity::UpdateGraphicsForFrame(float afFrameTime)
 	{

@@ -36,7 +36,7 @@ namespace hpl {
 	{
 	friend class cWorldLoaderHandler;
 	public:
-		
+		virtual ~iWorldLoader() {}
 		virtual cWorld* LoadWorld(const tWString& asFile, tWorldLoadFlag aFlags)=0;
 
 	protected:

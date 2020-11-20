@@ -72,11 +72,13 @@ namespace hpl {
 
 		cMaterial *GetMaterial();
 
+		bool UpdateGraphicsForViewport(cFrustum *apFrustum,float afFrameTime);
 		void UpdateGraphicsForFrame(float afFrameTime);
 
 		iVertexBuffer* GetVertexBuffer();
 
 		cBoundingVolume* GetBoundingVolume();
+		cBoundingVolume* GetSubMeshBoundingVolume();
 
 		cMatrixf* GetModelMatrix(cFrustum *apFrustum);
 
@@ -91,6 +93,9 @@ namespace hpl {
 
 		void* GetUserData(){ return mpUserData;}
 		void SetUserData(void *apData){ mpUserData = apData;}
+
+		void SetIsOccluder(bool abX) { mbIsOccluder = abX; }
+		bool IsOccluder() { return mbIsOccluder; }
 
 		//Entity implementation
 		tString GetEntityType(){ return "SubMesh";}
@@ -125,7 +130,10 @@ namespace hpl {
 		cSubMeshEntityBodyUpdate* mpEntityCallback;
 		bool mbUpdateBody;
 
+		bool mbIsOccluder;
 		bool mbGraphicsUpdated;
+		int mlBoneMatricesUpdateCount;
+		float mfDistanceToFrustum;
 
 		char mlStaticNullMatrixCount;
 		void *mpUserData;

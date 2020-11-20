@@ -62,6 +62,9 @@ namespace hpl {
 		static cDate FileModifiedDate(const tWString& asFilePath);
 		static cDate FileCreationDate(const tWString& asFilePath);
 
+		static void SetFileModifiedDate(const tWString& asFilePath, cDate aDate);
+		static void SetFileModifiedDate(const tWString& asFilePath, unsigned long long aUTime);
+
 		/**
 		* Returns a list of files in a dir
 		* \param &alstStrings list where the files are saved
@@ -117,6 +120,8 @@ namespace hpl {
 		static tWString LoadTextFromClipboard();
 
 		static tWString GetSystemSpecialPath(eSystemPath aPathType);
+
+		static float GetMousePointerSpeed(); //can return 1.0 on all but windows platforms
 
 		static unsigned long GetSystemAvailableDrives();
 

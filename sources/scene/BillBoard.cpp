@@ -331,6 +331,18 @@ namespace hpl {
 		return mbIsVisible;
 	}
 
+	bool cBillboard::IsFullyTranslucent()
+	{
+		if(mbIsHalo && mfHaloAlpha <= 0.0f || mColor.a <= 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	//-----------------------------------------------------------------------
 
 	void cBillboard::SetIsHalo(bool abX)

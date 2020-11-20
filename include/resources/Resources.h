@@ -113,7 +113,7 @@ namespace hpl {
 	{
 	public:
 		iMapDataLoader(const tString& asName): msName(asName){}
-
+		virtual ~iMapDataLoader() {}
 		const tString& GetName(){ return msName;}
 
 		

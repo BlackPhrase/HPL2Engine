@@ -187,6 +187,7 @@ namespace hpl {
 		 * Get the number of nodes.
 		 */
 		int GetNodeNum() const;
+		int GetListNum() { return mlListNum; }
 
 		/**
 		 * Get a node.
@@ -302,6 +303,8 @@ namespace hpl {
 		int mlMinNodeEnds;
 		float mfMaxEndDistance;
 		float mfMaxHeight;
+
+		int mlListNum;
 	};
 
 };

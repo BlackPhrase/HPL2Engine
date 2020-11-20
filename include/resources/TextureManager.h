@@ -51,7 +51,9 @@ namespace hpl {
 
 		iTexture* Create3D(	const tString& asName,bool abUseMipMaps, eTextureUsage aUsage=eTextureUsage_Normal,
 							unsigned int alTextureSizeLevel=0);
-		
+
+		iTexture* CreateFlattened3D(	const tString& asName,bool abUseMipMaps, eTextureUsage aUsage=eTextureUsage_Normal,
+							unsigned int alTextureSizeLevel=0);
 		/**
 		 * Creates an animated texture. The name must be [name]01.[ext]. And then the textures in the animation must
 		 * be named [name]01.[ext], [name]02.[ext], etc 
@@ -74,7 +76,8 @@ namespace hpl {
 	private:
 		iTexture* CreateSimpleTexture(const tString& asName,bool abUseMipMaps, 
 									eTextureUsage aUsage, eTextureType aType, 
-									unsigned int alTextureSizeLevel);
+									unsigned int alTextureSizeLevel,
+									bool isFlattened3d = false);
 
 		iTexture* FindTexture2D(const tString &asName, tWString &asFilePath);
 

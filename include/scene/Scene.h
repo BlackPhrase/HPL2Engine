@@ -107,6 +107,7 @@ namespace hpl {
 		
 	private:
 		void Render3DGui(cViewport* apViewPort,cFrustum *apFrustum,float afTimeStep);
+		void RenderPrePostEffectScreenGui(cViewport* apViewPort,float afTimeStep);
 		void RenderScreenGui(cViewport* apViewPort, float afTimeStep);
 
         cGraphics *mpGraphics;
