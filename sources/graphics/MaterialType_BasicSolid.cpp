@@ -267,6 +267,7 @@ namespace hpl {
 		AddUsedTexture(eMaterialTexture_Specular);
 		AddUsedTexture(eMaterialTexture_Height);
 		AddUsedTexture(eMaterialTexture_Illumination);
+		AddUsedTexture(eMaterialTexture_IlluminationModulate);
 		AddUsedTexture(eMaterialTexture_DissolveAlpha);
 		AddUsedTexture(eMaterialTexture_CubeMap);
 		AddUsedTexture(eMaterialTexture_CubeMapAlpha);
@@ -371,6 +372,7 @@ namespace hpl {
 			apMaterial->SetHasSpecificSettings(eMaterialRenderMode_Z,true);
 			apMaterial->SetHasSpecificSettings(eMaterialRenderMode_Diffuse,true);
 			apMaterial->SetHasSpecificSettings(eMaterialRenderMode_Illumination,true);
+			apMaterial->SetHasSpecificSettings(eMaterialRenderMode_IlluminationModulate,true);
 		}
 
 		//////////////////////////////////
@@ -385,6 +387,13 @@ namespace hpl {
 		if(apMaterial->GetTexture(eMaterialTexture_Illumination))
 		{
 			apMaterial->SetHasObjectSpecificsSettings(eMaterialRenderMode_Illumination,true);
+		}
+
+        //////////////////////////////////
+		//Illuminations specifics
+		if(apMaterial->GetTexture(eMaterialTexture_IlluminationModulate))
+		{
+			apMaterial->SetHasObjectSpecificsSettings(eMaterialRenderMode_IlluminationModulate,true);
 		}
 	}
 
@@ -500,7 +509,8 @@ namespace hpl {
 		}
 		////////////////////////////
 		//Illumination
-		else if(aRenderMode == eMaterialRenderMode_Illumination)
+		else if(aRenderMode == eMaterialRenderMode_Illumination
+            || aRenderMode == eMaterialRenderMode_IlluminationModulate )
 		{
 			tFlag lFlags =0;
 			if(apMaterial->HasUvAnimation())	lFlags |= eFeature_Illum_UvAnimation;
@@ -534,7 +544,8 @@ namespace hpl {
 		if(	aRenderMode == eMaterialRenderMode_Diffuse || 
 			aRenderMode == eMaterialRenderMode_Z || 
 			aRenderMode == eMaterialRenderMode_Z_Dissolve || 
-			aRenderMode == eMaterialRenderMode_Illumination)
+			aRenderMode == eMaterialRenderMode_Illumination || 
+			aRenderMode == eMaterialRenderMode_IlluminationModulate)
 		{
 			/////////////////////////
 			//UV Animation
@@ -581,7 +592,7 @@ namespace hpl {
 		}
 		////////////////////////////
 		//Illumination
-		else if(aRenderMode == eMaterialRenderMode_Illumination)
+		else if(aRenderMode == eMaterialRenderMode_Illumination || aRenderMode == eMaterialRenderMode_IlluminationModulate)
 		{
 			bool bRet = apProgram->SetFloat(kVar_afColorMul, apObject->GetIlluminationAmount());
 		}

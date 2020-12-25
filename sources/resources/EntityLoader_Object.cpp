@@ -755,7 +755,6 @@ namespace hpl {
 			}
 		}
 
-
 		////////////////////////////////////////	
 		// Set matrix on entity if there are no bodies.
 		if(mvBodies.size()<=0)
@@ -1018,6 +1017,8 @@ namespace hpl {
 
 		apBody->SetBlocksSound(apElem->GetAttributeBool("BlocksSound",false));
 		apBody->SetCollideCharacter(apElem->GetAttributeBool("CollideCharacter",true));
+		apBody->SetBlocksPathfinding(apElem->GetAttributeBool("BlocksPathfinding",false));
+
 		apBody->SetCollide(apElem->GetAttributeBool("CollideNonCharacter",true));
 
 		apBody->SetGravity(apElem->GetAttributeBool("HasGravity",true));

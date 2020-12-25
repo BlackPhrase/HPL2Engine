@@ -196,6 +196,24 @@ namespace hpl {
 		return date;
 	}
 
+    static struct tm GMTimeFromDate(cDate aDate)
+	{
+		struct tm time;
+
+        memset(&time, 0, sizeof(time));
+
+		time.tm_sec = aDate.seconds;
+		time.tm_min = aDate.minutes;
+		time.tm_hour = aDate.hours;
+		time.tm_mday = aDate.month_day;
+		time.tm_mon = aDate.month;
+		time.tm_year = aDate.year - 1900;
+		time.tm_wday = aDate.week_day;
+		time.tm_yday = aDate.year_day;
+
+		return time;
+	}
+
 	cDate cPlatform::FileModifiedDate(const tWString& asFilePath)
 	{
 		struct tm pClock;
@@ -223,6 +241,34 @@ namespace hpl {
 		cDate date = DateFromGMTime(&pClock);
 
 		return date;
+	}
+
+    void cPlatform::SetFileModifiedDate(const tWString& asFilePath, cDate aDate)
+	{
+		struct tm time = GMTimeFromDate(aDate);
+
+		//////////////
+		// To global time
+		time_t gmt = timegm(&time);
+
+        struct timeval times[2];
+
+        memset(times, 0, sizeof(times));
+        times[0].tv_sec = gmt;
+        times[1].tv_sec = gmt;
+
+        utimes(cString::S16BitToUTF8(asFilePath).c_str(), times);
+	}
+
+	void cPlatform::SetFileModifiedDate(const tWString& asFilePath, unsigned long long aUTime)
+	{
+        struct timeval times[2];
+
+        memset(times, 0, sizeof(times));
+        times[0].tv_sec = aUTime;
+        times[1].tv_sec = aUTime;
+
+        utimes(cString::S16BitToUTF8(asFilePath).c_str(), times);
 	}
 
 	//-----------------------------------------------------------------------

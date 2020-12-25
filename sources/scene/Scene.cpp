@@ -236,6 +236,10 @@ namespace hpl {
 				START_TIMING(Render3DGui)
 				Render3DGui(pViewPort,pFrustum, afFrameTime);
 				STOP_TIMING(Render3DGui)
+
+				START_TIMING(RenderPrePostEffectScreenGui)
+				RenderPrePostEffectScreenGui(pViewPort, afFrameTime);
+				STOP_TIMING(RenderPrePostEffectScreenGui)
 			}
 
 			//////////////////////////////////////////////
@@ -356,6 +360,23 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
+
+	//-----------------------------------------------------------------------
+
+	void cScene::RenderPrePostEffectScreenGui(cViewport *apViewPort,float afTimeStep)
+	{
+		if(apViewPort->GetCamera()==NULL) return;
+
+		cGuiSetListIterator it = apViewPort->GetGuiSetIterator();	
+		while(it.HasNext())
+		{
+			cGuiSet *pSet = it.Next();
+			if(!pSet->Is3D() && pSet->RendersBeforePostEffects())
+			{
+				pSet->Render(NULL);
+			}
+		}
+	}
 
 	//-----------------------------------------------------------------------
 

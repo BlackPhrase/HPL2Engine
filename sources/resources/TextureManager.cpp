@@ -96,6 +96,14 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
+	iTexture* cTextureManager::CreateFlattened3D(const tString& asName,bool abUseMipMaps, eTextureUsage aUsage,
+										unsigned int alTextureSizeLevel)
+	{
+		return CreateSimpleTexture(asName,abUseMipMaps,aUsage, eTextureType_3D,alTextureSizeLevel,true);
+	}
+    
+    //-----------------------------------------------------------------------
+
 	iTexture* cTextureManager::CreateAnim(const tString& asFirstFrameName,bool abUseMipMaps,eTextureType aType,
 											eTextureUsage aUsage, unsigned int alTextureSizeLevel)
 	{
@@ -363,7 +371,8 @@ namespace hpl {
 
 	iTexture* cTextureManager::CreateSimpleTexture(	const tString& asName,bool abUseMipMaps, 
 													eTextureUsage aUsage, eTextureType aType,
-													unsigned int alTextureSizeLevel)
+													unsigned int alTextureSizeLevel,
+													bool isFlattened3d)
 	{
 		tWString sPath;
 		iTexture* pTexture;
@@ -390,6 +399,18 @@ namespace hpl {
 			
 			pTexture->SetUseMipMaps(abUseMipMaps);
 			pTexture->SetSizeDownScaleLevel(alTextureSizeLevel);
+
+            if ( isFlattened3d )
+            {
+                cVector3l size = pBmp->GetSize();
+
+                assert( size.z == 1 && size.y == ( size.x * size.x ) );
+
+                size.y = size.x;
+                size.z = size.x;
+
+                pBmp->SetSize(size);
+            }
 			
 			if(pTexture->CreateFromBitmap(pBmp)==false)
 			{

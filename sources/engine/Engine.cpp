@@ -457,7 +457,6 @@ namespace hpl {
 					bIsUpdated = true;
 
                     if (mpInput->isQuitMessagePosted()) {
-
                         mpUpdater->RunMessage(eUpdateableMessage_OnQuit);
 
                         mpInput->resetQuitMessagePosted();
@@ -635,6 +634,11 @@ namespace hpl {
 	float cEngine::GetAvgFrameTimeInMS()
 	{
 		return (1.0f/mpFPSCounter->mfFPS)*1000.0f;
+	}
+
+	float cEngine::GetRenderingLogicTime()
+	{ 
+		return mfRenderingLogicTime; 
 	}
 	
 	//-----------------------------------------------------------------------

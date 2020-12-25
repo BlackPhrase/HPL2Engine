@@ -83,6 +83,7 @@ namespace hpl {
 		tString GetEntityType(){ return "Billboard";}
 
 		bool IsVisible();
+		bool IsFullyTranslucent();
 
 		//Renderable implementations
 		cMaterial *GetMaterial(){ return mpMaterial;}

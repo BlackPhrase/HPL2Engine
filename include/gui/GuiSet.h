@@ -388,6 +388,10 @@ namespace hpl {
 
 		cGui* GetGui(){ return mpGui;}
 
+
+		void SetFocusColor(const cColor & avColro) { mvFocusColor = avColro; }
+		cColor GetFocusColor() { return mvFocusColor; }
+
 		void SetDrawMouse(bool abX);
 		bool GetDrawMouse(){ return mbDrawMouse;}
 
@@ -605,6 +609,7 @@ namespace hpl {
 
 		iWidget*	mpDefaultFocusNavWidget;
 		tWidgetList	mlstDefaultFocusStack;
+		cColor mvFocusColor;
 
 		bool				mbDrawFocus;
 		void*				mpFocusDrawObject;

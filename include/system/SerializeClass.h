@@ -24,6 +24,8 @@
 #include "system/SystemTypes.h"
 #include "system/MemoryManager.h"
 
+#include "impl/tinyXML/tinyxml.h"
+
 class TiXmlElement;
 
 namespace hpl {
@@ -322,6 +324,7 @@ namespace hpl {
 
 		static bool SaveToFile(iSerializable* apData, const tWString &asFile,const tString &asRoot, bool abCompressAndCRC=false);
 		static void SaveToElement(iSerializable* apData,const tString &asName, TiXmlElement *apParent, bool abIsPointer=false);
+		static bool SaveElementToFile(TiXmlDocument* apXmlDoc, const tWString &asFile,bool abCompressAndCRC=false);
 
 		static bool LoadFromFile(iSerializable* apData, const tWString &asFile, bool abCompressedAndCRC=false);
 		static void LoadFromElement(iSerializable* apData, TiXmlElement *apElement, bool abIsPointer=false);
@@ -333,6 +336,8 @@ namespace hpl {
 		static const char* ValueToString(void* apData, size_t alOffset, eSerializeType aType);
 		static void StringToValue(void* apData, size_t alOffset, eSerializeType aType,
 										const char* asVal);
+
+		static void ResetGeneration();
 
 	private:
 		static void SaveVariable(TiXmlElement *apElement, cSerializeMemberField *apField, iSerializable* apData);

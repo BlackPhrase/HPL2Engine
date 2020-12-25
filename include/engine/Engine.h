@@ -140,6 +140,12 @@ namespace hpl {
 		float GetFPS();
 		float GetAvgFrameTimeInMS();
 
+		float GetGameLogicTime(float& afIterations) { afIterations = (float)mfGameLogicIterations; return (float)mfGameLogicTime; }
+		float GetRenderingLogicTime();
+
+		float GetMaxGameLogic() { return mfMaxGameLogic; }
+		float GetMaxRenderLogic() { return mfMaxRenderLogic; }
+
 		void SetFPSUpdateRate(float afSec);
 		float GetFPSUpdateRate();
 

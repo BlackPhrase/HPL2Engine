@@ -196,6 +196,7 @@ namespace hpl {
 	void cRenderList::Compile(tRenderListCompileFlag aFlags)
 	{
 		if(aFlags & eRenderListCompileFlag_Z) CompileArray(eRenderListType_Z);
+		if(aFlags & eRenderListCompileFlag_Z_Dissolve) CompileArray(eRenderListType_Z_Dissolve);
 		if(aFlags & eRenderListCompileFlag_Diffuse) CompileArray(eRenderListType_Diffuse);
 		if(aFlags & eRenderListCompileFlag_Decal) CompileArray(eRenderListType_Decal);
 		if(aFlags & eRenderListCompileFlag_Illumination) CompileArray(eRenderListType_Illumination);

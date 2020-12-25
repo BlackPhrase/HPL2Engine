@@ -23,6 +23,7 @@
 #include "math/Math.h"
 
 #include "impl/LowLevelGraphicsSDL.h"
+#include "graphics/Renderer.h"
 
 #include <GL/glew.h>
 
@@ -74,6 +75,8 @@ namespace hpl {
 		if(mlElementNum<0) lSize = GetIndexNum();
 		
 		glDrawElements(mode,lSize,GL_UNSIGNED_INT, &mvIndexArray[0]);
+		
+		iRenderer::IncDrawCalls();
 	}
 
 	void cVertexBufferOGL_Array::DrawIndices(	unsigned int *apIndices, int alCount,
@@ -90,6 +93,8 @@ namespace hpl {
 		//////////////////////////////////
 		//Bind and draw the buffer
 		glDrawElements(mode, alCount, GL_UNSIGNED_INT, apIndices);
+		
+		iRenderer::IncDrawCalls();
 	}
 
 

@@ -57,6 +57,7 @@ namespace hpl {
 		bool DataIsInMeshFile(){return mpAnimationManager==NULL;}
 
 		bool IsFading();
+		bool IsFadingOut(){ return mfFadeStep<0;}
 
 		/**
 		 * If the animation has reached the end.
@@ -65,6 +66,9 @@ namespace hpl {
 
 		void FadeIn(float afTime);
 		void FadeOut(float afTime);
+
+		void FadeInSpeed(float afTime);
+		void FadeOutSpeed(float afTime);
 
 		void SetLength(float afLength);
 		float GetLength();
@@ -107,6 +111,9 @@ namespace hpl {
 		bool IsAfterSpecialEvent();
 		bool IsBeforeSpecialEvent();
 
+		void CreateSkeletonBoundsFromMesh(cMeshEntity * apMesh, tBoneStateVec * apvBoneStates);
+		bool TryGetBoundingVolumeAtTime(float afTime, cVector3f & avMin, cVector3f & avMax);
+
 		void AddTimePosition(float afAdd);
 
 		cAnimation* GetAnimation();
@@ -117,6 +124,9 @@ namespace hpl {
 
 		float GetFadeStep(){ return mfFadeStep;}
 		void SetFadeStep(float afX){ mfFadeStep = afX;}
+
+		bool CanBlend() { return mbCanBlend; }
+		void SetCanBlend( bool abCanBlend ) { mbCanBlend = abCanBlend; }
 	
 	private:
 		tString msName;
@@ -141,9 +151,11 @@ namespace hpl {
 		bool mbActive;
 		bool mbLoop;
 		bool mbPaused;
+		bool mbCanBlend;
 
 		//properties for update
 		float mfFadeStep;
+		float mfFadeSpeed;
 	};
 
 };

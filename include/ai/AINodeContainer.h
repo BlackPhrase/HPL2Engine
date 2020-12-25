@@ -70,10 +70,12 @@ namespace hpl {
 		
 		const tString& GetName(){ return msName;}
 		int GetID(){ return mlID; }
-		
+
+		int GetListID() { return mlListID; }
 	private:
 		tString msName;
 		int mlID;
+		int mlListID;
 		cVector3f mvPosition;
 		void *mpUserData;
 

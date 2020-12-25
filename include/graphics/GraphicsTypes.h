@@ -98,9 +98,9 @@ namespace hpl {
 	#define eAnimTransformFlag_Rotate		(0x00000002)
 	#define eAnimTransformFlag_Scale		(0x00000004)
 	
-	#define klNumOfAnimTransformFlags (2)
+	#define klNumOfAnimTransformFlags (3)
 
-	const tAnimTransformFlag kvAnimTransformFlags[] = {eAnimTransformFlag_Translate, eAnimTransformFlag_Rotate};
+	const tAnimTransformFlag kvAnimTransformFlags[] = {eAnimTransformFlag_Translate, eAnimTransformFlag_Rotate, eAnimTransformFlag_Scale};
 
 	//-----------------------------------------
 
@@ -553,6 +553,7 @@ namespace hpl {
 		eMaterialTexture_Alpha,
 		eMaterialTexture_Height,
 		eMaterialTexture_Illumination,
+		eMaterialTexture_IlluminationModulate,
 		eMaterialTexture_CubeMap,
 		eMaterialTexture_DissolveAlpha,
 		eMaterialTexture_CubeMapAlpha,
@@ -596,6 +597,7 @@ namespace hpl {
 		eMaterialRenderMode_DiffuseFog,		//Transparent pass with fog.
 		eMaterialRenderMode_Light,			//Not used by deferred shader.
 		eMaterialRenderMode_Illumination,	//Illumination textures.
+		eMaterialRenderMode_IlluminationModulate,	//Illumination textures modulated by another texture.
 		eMaterialRenderMode_IlluminationFog,//Illumination with fog (used by transperant textures)
 		eMaterialRenderMode_LastEnum,
 	};
@@ -697,6 +699,7 @@ namespace hpl {
 	#define eRenderListCompileFlag_Translucent	(0x00000004)
 	#define eRenderListCompileFlag_Decal		(0x00000008)
 	#define eRenderListCompileFlag_Illumination	(0x00000010)
+	#define eRenderListCompileFlag_Z_Dissolve	(0x00000020)
 
 	enum eRenderListType
 	{
@@ -705,6 +708,7 @@ namespace hpl {
 		eRenderListType_Translucent,
 		eRenderListType_Decal,
 		eRenderListType_Illumination,
+		eRenderListType_Z_Dissolve,
 		eRenderListType_LastEnum
 	};
 

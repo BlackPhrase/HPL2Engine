@@ -120,6 +120,7 @@ namespace hpl {
 		cProgramComboFeature("UseGobo", kPC_FragmentBit),
 		cProgramComboFeature("DivideInFrag", kPC_FragmentBit | kPC_VertexBit),
 		cProgramComboFeature("UseShadowMap", kPC_FragmentBit, eFeature_Light_SpotLight),
+		cProgramComboFeature("DebugComplexity", kPC_FragmentBit),
 	};
 
 	//////////////////////////////////////////////////////////////////////////
@@ -511,6 +512,8 @@ namespace hpl {
 				mpProgramManager->AddGenerateProgramVariableId("a_mtxSpotViewProj", kVar_a_mtxSpotViewProj, eDefferredProgramMode_Lights);
 				mpProgramManager->AddGenerateProgramVariableId("a_mtxInvViewRotation", kVar_a_mtxInvViewRotation, eDefferredProgramMode_Lights);
 				mpProgramManager->AddGenerateProgramVariableId("avShadowMapOffsetMul", kVar_avShadowMapOffsetMul, eDefferredProgramMode_Lights);
+				mpProgramManager->AddGenerateProgramVariableId("afFalloff",	kVar_afFalloff, eDefferredProgramMode_Lights);
+				mpProgramManager->AddGenerateProgramVariableId("afComplexity",	kVar_afComplexity, eDefferredProgramMode_Lights);
 			}
 
 			//////////////////////////////
@@ -607,6 +610,7 @@ namespace hpl {
 			mbEdgeSmoothLoaded = false;
 			Warning("System does not support float textures! Edge smooth is disabled.\n");
 		}
+
 		if(mbEdgeSmoothLoaded)
 		{
 			/////////////////////////////////////
@@ -728,6 +732,7 @@ namespace hpl {
 		/////////////////////////
 		//Fog stuff
 		hplDelete(mpFogProgramManager);
+		//hplDelete(mpModulatedFogProgram);
 
 		/////////////////////////
 		//SSAO textures and programs
@@ -789,6 +794,17 @@ namespace hpl {
 		return mpGBufferTexture[lType][alIdx];
 	}
 	
+	cDeferredLight* cRendererDeferred::GetDeferredLight(int alID)
+	{
+		if(alID < mvTempDeferredLights.size()) return mvTempDeferredLights[alID];
+		return NULL;
+	}
+
+	int cRendererDeferred::GetDeferredLightNum()
+	{
+		return mvTempDeferredLights.size();
+	}
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -841,6 +857,8 @@ namespace hpl {
 	
 	void cRendererDeferred::RenderObjects()
 	{
+		mlDrawCalls = 0;
+
 		//Set up variables used in rendering later on.
 		SetupRenderVariables();
 		
@@ -914,6 +932,11 @@ namespace hpl {
 		//RenderSSAO();
 		//return;
 
+		//if(mbDebugRenderLightBuffer)
+        //{
+        //    RenderLightBufferContent();
+        //    return;
+        //}
 
 		RenderIllumination();
 
@@ -988,6 +1011,28 @@ namespace hpl {
 		SetTextureRange(NULL,0);
 
 		cRenderableVecIterator zIt = mpCurrentRenderList->GetArrayIterator(eRenderListType_Z);
+		while(zIt.HasNext())
+		{
+			iRenderable *pObject = zIt.Next();
+			RenderZObject(pObject, NULL);
+		}
+
+		END_RENDER_PASS();
+	}
+
+	void cRendererDeferred::RenderZDissolve()
+	{
+		START_RENDER_PASS(EarlyZDissolveOnly);
+
+		SetDepthTest(true);
+		SetDepthWrite(true);
+		SetBlendMode(eMaterialBlendMode_None);
+		SetAlphaMode(eMaterialAlphaMode_Solid);
+		SetChannelMode(eMaterialChannelMode_None);
+
+		SetTextureRange(NULL,0);
+
+		cRenderableVecIterator zIt = mpCurrentRenderList->GetArrayIterator(eRenderListType_Z_Dissolve);
 		while(zIt.HasNext())
 		{
 			iRenderable *pObject = zIt.Next();

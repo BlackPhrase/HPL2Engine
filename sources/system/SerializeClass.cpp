@@ -200,6 +200,17 @@ namespace hpl {
 				pField->mType, pField->mlOffset);
 		}
 	}
+	
+	//-----------------------------------------------------------------------
+
+	void cSerializeClass::ResetGeneration()
+	{
+		//////////////
+		// Reset some data
+		SetUpData();
+
+		glTabs=0;
+	}
 
 	//-----------------------------------------------------------------------
 

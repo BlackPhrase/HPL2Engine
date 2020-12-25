@@ -105,6 +105,8 @@ namespace hpl {
 		void FadeOut(float afSpeed);
 		void FadeIn(float afVolumeMul,float afSpeed);
 
+		iSoundChannel* GetSoundChannel() { return mpSound; }
+
 		iSoundEntryCallback* GetCallBack(){ return mpCallback;}
 		void SetCallBack(iSoundEntryCallback* apCallback){ mpCallback = apCallback;}
 

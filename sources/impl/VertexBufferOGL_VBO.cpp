@@ -23,6 +23,7 @@
 #include "math/Math.h"
 
 #include "impl/LowLevelGraphicsSDL.h"
+#include "graphics/Renderer.h"
 
 #include <memory.h>
 
@@ -136,6 +137,8 @@ namespace hpl {
 		//glDrawRangeElements(mode,0,GetVertexNum(),lSize,GL_UNSIGNED_INT, NULL);
 
 		glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB,0);
+
+		iRenderer::IncDrawCalls();
 	}
 
 	//-----------------------------------------------------------------------
@@ -153,6 +156,7 @@ namespace hpl {
 		//////////////////////////////////
 		//Bind and draw the buffer
 		glDrawElements(mode, alCount, GL_UNSIGNED_INT, apIndices);
+		iRenderer::IncDrawCalls();
 	}
 
 

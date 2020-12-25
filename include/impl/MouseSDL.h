@@ -51,6 +51,8 @@ namespace hpl {
 		cVector2l GetRelPosition();
 
 		void Reset();
+
+		static float GetMousePointerSpeed();
 		
 	private:
 		bool mbFirstTime;

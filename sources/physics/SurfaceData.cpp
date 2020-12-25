@@ -121,6 +121,8 @@ namespace hpl {
 			cSoundEntity *pEntity = pWorld->CreateSoundEntity("Impact",pData->GetSoundName(),true);
 			if(pEntity)
 			{
+				//Log("Play impact for body '%s': '%s'\n", apBody->GetName().c_str(), pData->GetSoundName().c_str());
+
 				pEntity->SetIsSaved(false);
 				//TODO: Offset the sound a bit so that it is not played inside a static object.
 				pEntity->SetPosition(avPos);
